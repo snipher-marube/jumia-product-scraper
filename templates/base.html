@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jumia WEB SCRAPPER</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body>
+    {% block content %}
+        <!--content goes here-->
+    {% endblock %}
+    <!--loading spinner-->
+    <div id="loading" class="hidden text-center mt-8">
+    <div class="spinner-border text-blue-500"></div>
+    <p>Loading...</p>
+</div>
+
+<script>
+const form = document.querySelector('form');
+const loadingDiv = document.getElementById('loading');
+
+form.addEventListener('submit', function() {
+    loadingDiv.classList.remove('hidden');
+});
+</script>
+
+</body>
+</html>

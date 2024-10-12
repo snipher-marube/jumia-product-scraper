@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="mx-auto items-center justify-center mt-12">
+    <h1 class="text-3xl text-center underlined font-bold font-sans">Search for
+        items in Jumia</h1>
+</div>
+
+<
+
+<!-- Search & Price Filter Range & Sort By -->
+<form method="GET" class="max-w-5xl mx-auto mt-8 space-y-4">
+    <!-- Search and Price Filters -->
+    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <input type="text" name="product" placeholder="Search something..." 
+               class="w-full sm:flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        
+        <input type="number" name="min_price" placeholder="Min Price" 
+               class="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        
+        <input type="number" name="max_price" placeholder="Max Price" 
+               class="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        
+        <button type="submit" 
+                class="w-full sm:w-auto bg-blue-500 text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            Search
+        </button>
+    </div>
+
+    <!-- Sort By -->
+    <div class="flex justify-between items-center space-x-4">
+        <select name="sort" class="w-md sm:w-auto px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">Sort by</option>
+            <option value="price_asc">Price (Low to High)</option>
+            <option value="price_desc">Price (High to Low)</option>
+            <option value="rating_desc">Rating (High to Low)</option>
+        </select>
+        
+        <button type="submit" 
+                class=" sm:w-auto bg-blue-500 text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            Apply
+        </button>
+    </div>
+</form>
+
+
+
+
+<!-- Search results section -->
+{% if page_obj %}
+<div class="max-w-5xl mx-auto mt-8">
+    <h2 class="text-2xl font-bold">Search Results</h2>
+    <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+        {% for product in page_obj %}
+        <div class="prd-item border p-4">
+            <img src="{{ product.image }}" alt="{{ product.name }}"
+                class="w-full h-48 object-cover" />
+            <h3 class="mt-2 text-lg font-semibold">{{ product.name }}</h3>
+            <p class="mt-1 text-gray-600">Price: {{ product.price }}</p>
+            <p class="mt-1 text-gray-600">Rating: {{ product.rating }}</p>
+            <p class="mt-1 text-gray-600">Rating Percentage: {{product.rating_percentage }}</p>
+            
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Paginator -->
+    <div class="pagination mt-8">
+        <span class="text-sm text-gray-500">Page {{ page_obj.number }} of {{page_obj.paginator.num_pages }}</span>
+        <div class="flex items-center justify-center mt-4">
+            {% if page_obj.has_previous %}
+            <a
+                href="?product={{ request.GET.product }}&page={{ page_obj.previous_page_number }}"
+                class="mr-4 text-blue-500">Previous</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <a
+                href="?product={{ request.GET.product }}&page={{ page_obj.next_page_number }}"
+                class="text-blue-500">Next</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="text-center mt-8 text-gray-500">No products found. Try searching for
+    something else.</div>
+{% endif %}
+
+
+{% endblock %}
