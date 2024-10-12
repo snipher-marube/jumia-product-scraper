@@ -37,7 +37,7 @@ Follow these steps to set up the project locally:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/yourusername/jumia-product-scraper.git
+   git clone https://github.com/snipher-marube/jumia-product-scraper.git
    cd jumia-product-scraper
    ```
 
@@ -108,7 +108,7 @@ jumia-product-scraper/
 │   ├── urls.py
 │   └── views.py
 │
-├── jumia_product_scraper/
+├── webscrapper/
 │   ├── __init__.py
 │   ├── settings.py
 │   ├── urls.py
